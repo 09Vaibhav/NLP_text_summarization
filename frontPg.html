@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text Analyzer</title>
+  <style>
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 10px;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: #505851;
+      color: rgba(31, 27, 27, 0.39);
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- <script>
+    function getText() {
+      // Get the textarea element by its ID
+      var textarea = document.getElementById("text");
+
+      // Retrieve the text from the textarea
+      var text = textarea.value;
+
+      // Do something with the text
+      console.log(text);
+    }
+  </script> -->
+  <div class="container">
+    <h2>Text Analyzer</h2>
+    <form>
+      <label for="file">Upload PDF:</label>
+      <input type="file" id="file" name="file" accept=".pdf"><br><br>
+      
+      <label for="text">Or enter text:</label><br>
+      <textarea id="text" value="" name="text" placeholder="Enter text here..."></textarea><br>
+
+      <button class="button" onclick="analyzeText()">Text Analyzer</button>
+    </form>
+  </div>
+  <script>
+    function analyzeText() {
+        var text = document.getElementById('text').value;
+        fetch('http://127.0.0.1:5000/process', {
+          method: 'POST', // or 'GET', 'PUT', 'DELETE', etc.
+          headers: {
+            'Content-Type': 'text/plain', // set the appropriate Content-Type header
+          },
+          body: JSON.stringify(text), // Stringify the data and pass it as the body
+        })
+          .then(response => response.text()) // parse response as JSON
+          .then(data => {
+            // handle the response data
+            console.log(data);
+            alert(data)
+          })
+          .catch(error => {
+            // handle any errors
+            console.error(error);
+            alert(error)
+          });
+          
+     
+          
+    }
+  </script>
+</body>
+</html>

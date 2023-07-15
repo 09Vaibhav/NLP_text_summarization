@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text Analysis Dashboard</title>
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 10px;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .copy-button {
+      margin-left: 10px;
+    }
+
+    .share-button {
+      margin-left: 10px;
+    }
+
+    .feedback-section {
+      margin-top: 30px;
+    }
+
+    .feedback-form {
+      margin-top: 20px;
+    }
+
+    .rating-stars input {
+      display: none;
+    }
+
+    .rating-label {
+      font-size: 20px;
+      color: #bbb;
+      cursor: pointer;
+    }
+
+    .rating-label:hover,
+    .rating-label:hover ~ .rating-label,
+    .rating-stars input:checked ~ .rating-label {
+      color: #f2b600;
+    }
+
+    .submit-button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Text Analysis Dashboard</h2>
+    <textarea id="text" name="text" placeholder="Enter text here..."></textarea><br>
+
+    <button class="button" onclick="summarizeText()">Text Summary</button>
+    <button class="button" onclick="analyzeNER()">Name Entity Recognizer</button>
+    <button class="button" onclick="analyzeSentiment()">Sentiment Analysis</button>
+    <button class="button" onclick="detectDifficultWords()">Detect Difficult Words</button>
+
+    <div id="summary-result" style="display: none;">
+      <h3>Text Summary</h3>
+      <p id="summary-text"></p>
+      <button class="button copy-button" onclick="copyText()">Copy Text</button>
+      <button class="button share-button" onclick="shareOnWhatsapp()">Share on WhatsApp</button>
+      <button class="button share-button" onclick="shareOnFacebook()">Share on Facebook</button>
+      <button class="button share-button" onclick="shareOnInstagram()">Share on Instagram</button>
+    </div>
+
+    <div id="ner-result" style="display: none;">
+      <h3>Name Entity Recognizer</h3>
+      <p id="ner-text"></p>
+      <div id="ner-chart"></div>
+    </div>
+
+    <div id="sentiment-result" style="display: none;">
+      <h3>Sentiment Analysis</h3>
+      <p id="sentiment-text"></p>
+      <div id="sentiment-chart"></div>
+    </div>
+
+    <div id="difficult-words-result" style="display: none;">
+      <h3>Difficult Words</h3>
+      <p id="difficult-words-text"></p>
+    </div>
+
+    <div id="word-cloud" style="display: none;">
+      <h3>Word Cloud</h3>
+      <div id="word-cloud-chart"></div>
+    </div>
+
+    <div class="feedback-section">
+      <h3>Feedback and Ratings</h3>
+      <div class="feedback-form">
+        <label for="feedback">Feedback:</label><br>
+        <textarea id="feedback" name="feedback" placeholder="Enter your feedback here..."></textarea><br>
+
+        <label for="rating">Rating:</label><br>
+        <div class="rating-stars">
+          <input type="radio" id="rating5" name="rating" value="5">
+          <label class="rating-label" for="rating5">&#9733;</label>
+          <input type="radio" id="rating4" name="rating" value="4">
+          <label class="rating-label" for="rating4">&#9733;</label>
+          <input type="radio" id="rating3" name="rating" value="3">
+          <label class="rating-label" for="rating3">&#9733;</label>
+          <input type="radio" id="rating2" name="rating" value="2">
+          <label class="rating-label" for="rating2">&#9733;</label>
+          <input type="radio" id="rating1" name="rating" value="1">
+          <label class="rating-label" for="rating1">&#9733;</label>
+        </div>
+
+        <button class="button submit-button" onclick="submitFeedback()">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function summarizeText() {
+      var text = document.getElementById('text').value;
+      // Perform text summarization here
+
+      // Example: Update the summary result
+      var summary = "This is a text summary.";
+      document.getElementById('summary-text').textContent = summary;
+      document.getElementById('summary-result').style.display = 'block';
+    }
+
+    function analyzeNER() {
+      var text = document.getElementById('text').value;
+      // Perform name entity recognition here
+
+      // Example: Update the NER result
+      var nerResult = "Person: John Doe, Location: New York";
+      document.getElementById('ner-text').textContent = nerResult;
+
+      // Example: Generate a bar plot for NER
+      var nerChart = document.getElementById('ner-chart');
+      // Code to generate bar plot goes here
+
+      document.getElementById('ner-result').style.display = 'block';
+    }
+
+    function analyzeSentiment() {
+      var text = document.getElementById('text').value;
+      // Perform sentiment analysis here
+
+      // Example: Update the sentiment result
+      var sentimentResult = "Positive";
+      document.getElementById('sentiment-text').textContent = sentimentResult;
+
+      // Example: Generate a line graph for sentiment analysis
+      var sentimentChart = document.getElementById('sentiment-chart');
+      // Code to generate line graph goes here
+
+      document.getElementById('sentiment-result').style.display = 'block';
+    }
+
+    function detectDifficultWords() {
+      var text = document.getElementById('text').value;
+      // Perform difficult words detection here
+
+      // Example: Update the difficult words result
+      var difficultWords = "Vivacious, Peculiar, Serendipity";
+      document.getElementById('difficult-words-text').textContent = difficultWords;
+
+      document.getElementById('difficult-words-result').style.display = 'block';
+    }
+
+    function copyText() {
+      var summary = document.getElementById('summary-text');
+      var range = document.createRange();
+      range.selectNode(summary);
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+
+      // Deselect the text
+      window.getSelection().removeAllRanges();
+    }
+
+    function shareOnWhatsapp() {
+      var summary = document.getElementById('summary-text').textContent;
+      var shareUrl = "whatsapp://send?text=" + encodeURIComponent(summary);
+      window.open(shareUrl);
+    }
+
+    function shareOnFacebook() {
+      var summary = document.getElementById('summary-text').textContent;
+      var shareUrl = "https://www.facebook.com/sharer/sharer.php?u=&t=" + encodeURIComponent(summary);
+      window.open(shareUrl);
+    }
+
+    function shareOnInstagram() {
+      var summary = document.getElementById('summary-text').textContent;
+      var shareUrl = "https://www.instagram.com/?text=" + encodeURIComponent(summary);
+      window.open(shareUrl);
+    }
+
+    function submitFeedback() {
+      var feedback = document.getElementById('feedback').value;
+      var rating = document.querySelector('input[name="rating"]:checked').value;
+      // Perform submission logic here
+
+      // Example: Show a thank you message
+      alert("Thank you for your feedback and rating!");
+
+      // Clear the form fields
+      document.getElementById('feedback').value = '';
+      document.querySelector('input[name="rating"]:checked').checked = false;
+    }
+  </script>
+</body>
+</html>
